@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<section class="hero-section py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title display-4 fw-800 mb-4 lh-sm text-dark">
+                    Siz Sürün,<br><span class="text-primary">ODAK İzlesin.</span>
+                </h1>
+
+                <p class="text-muted fs-5 mb-5 pe-lg-5" style="max-width: 550px;">
+                    Gelişmiş yüz tanıma ve analiz teknolojimizle yorgunluğu saniyeler içinde tespit ediyor, sevdiklerinizi ve sizi koruyoruz.
+                </p>
+
+                <div class="d-flex gap-3 mb-5 mb-lg-0">
+                    <a href="/Account/Login" class="btn btn-primary btn-lg rounded-pill px-4 py-2 fw-bold shadow-sm">
+                        Sisteme Giriş <i class="bi bi-arrow-right-short ms-1"></i>
+                    </a>
+                    <a href="/Home/AboutUs" class="btn btn-outline-secondary btn-lg rounded-pill px-4 py-2 fw-bold">
+                        Daha Fazla
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mt-5 mt-lg-0">
+                <div class="hero-img-box position-relative">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80"
+                         alt="Sürüş Deneyimi" class="img-fluid rounded-5 shadow-lg w-100">
+                    
+                    <div class="status-card position-absolute bg-white p-3 rounded-4 shadow-lg border-start border-primary border-5" 
+                         style="bottom: 30px; left: -20px; min-width: 220px; max-width: 280px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-800 text-dark small">YAPAY ZEKA DURUMU</span>
+                            <div class="spinner-grow spinner-grow-sm text-danger" role="status"></div>
+                        </div>
+                        <div class="progress mb-2 bg-light" style="height: 6px;">
+                            <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: 85%"></div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted fw-bold" style="font-size: 0.75rem;">Konsantrasyon</small>
+                            <small class="text-success fw-800" style="font-size: 0.75rem;">%85 Mükemmel</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-4 border-end border-white border-opacity-25">
+                <h2 class="fw-800 display-6 mb-0">0.2sn</h2>
+                <p class="text-white-50 mb-0 small text-uppercase fw-bold">Algılama Hızı</p>
+            </div>
+            
+            <div class="col-6 col-md-4 border-end border-white border-opacity-25 d-none d-md-block">
+                <h2 class="fw-800 display-6 mb-0">%98</h2>
+                <p class="text-white-50 mb-0 small text-uppercase fw-bold">Doğruluk Payı</p>
+            </div>
+            
+            <div class="col-6 col-md-4 border-end border-white border-opacity-25 d-md-none">
+                <h2 class="fw-800 display-6 mb-0">%98</h2>
+                <p class="text-white-50 mb-0 small text-uppercase fw-bold">Doğruluk Payı</p>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <h2 class="fw-800 display-6 mb-0">7/24</h2>
+                <p class="text-white-50 mb-0 small text-uppercase fw-bold">Kesintisiz Takip</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-container py-5 bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5 mx-auto" style="max-width: 600px;">
+            <h2 class="fw-800 display-6 mb-3">Neden Odak?</h2>
+            <p class="text-muted">Sürüş güvenliğinizi şansa bırakmıyoruz. İşte bizi farklı kılan özellikler.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-item bg-white p-4 rounded-4 shadow-sm h-100 text-center text-md-start transition-hover">
+                    <div class="icon-wrap d-inline-flex align-items-center justify-content-center rounded-circle mb-3 bg-primary bg-opacity-10 text-primary" style="width: 60px; height: 60px;">
+                        <i class="bi bi-eye fs-3"></i>
+                    </div>
+                    <h4 class="fw-700 mb-2">Göz Takibi</h4>
+                    <p class="text-muted mb-0">Göz kapaklarının kapanma süresini ve frekansını milisaniye hassasiyetinde ölçerek analiz eder.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-item bg-white p-4 rounded-4 shadow-sm h-100 text-center text-md-start transition-hover">
+                    <div class="icon-wrap d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="background:#fff1f2; color:#e11d48; width: 60px; height: 60px;">
+                        <i class="bi bi-alarm fs-3"></i>
+                    </div>
+                    <h4 class="fw-700 mb-2">Anlık Uyarı</h4>
+                    <p class="text-muted mb-0">Yorgunluk veya dalgınlık anında yüksek sesli ve görsel ikazlar vererek sürücüyü uyarır.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-item bg-white p-4 rounded-4 shadow-sm h-100 text-center text-md-start transition-hover">
+                    <div class="icon-wrap d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="background:#f0fdf4; color:#16a34a; width: 60px; height: 60px;">
+                        <i class="bi bi-graph-up fs-3"></i>
+                    </div>
+                    <h4 class="fw-700 mb-2">Detaylı Rapor</h4>
+                    <p class="text-muted mb-0">Sürüş sonunda dikkatinizin ne zaman azaldığını grafiklerle size raporlar ve puanlar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="process-section py-5 bg-white">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-800 display-6">Sistem Nasıl Çalışır?</h2>
+            <p class="text-muted">Yapay zeka teknolojimiz arka planda 3 adımda sizi korur.</p>
+        </div>
+        
+        <div class="row g-4 align-items-center position-relative justify-content-center">
+            <div class="d-none d-lg-block position-absolute top-50 start-0 w-100 translate-middle-y" style="z-index: 0;">
+                <div class="border-top border-2 border-primary border-opacity-10 w-75 mx-auto" style="border-style: dashed !important;"></div>
+            </div>
+
+            <div class="col-lg-4 text-center position-relative" style="z-index: 1;">
+                <div class="bg-white p-4 rounded-4 shadow-sm border d-inline-block" style="width: 100%; max-width: 320px;">
+                    <div class="badge bg-primary rounded-circle p-3 mb-3 fs-4 shadow-sm" style="width: 60px; height: 60px;">1</div>
+                    <h5 class="fw-bold">Görüntü Alma</h5>
+                    <p class="text-muted small mb-0">Araç içi kamera, sürücünün yüz verilerini anlık olarak sisteme iletir.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 text-center position-relative" style="z-index: 1;">
+                <div class="bg-primary text-white p-4 rounded-4 shadow-lg border border-primary d-inline-block" style="width: 100%; max-width: 340px; transform: scale(1.05);">
+                    <div class="badge bg-white text-primary rounded-circle p-3 mb-3 fs-4 shadow-sm" style="width: 60px; height: 60px;">2</div>
+                    <h5 class="fw-bold">Yapay Zeka Analizi</h5>
+                    <p class="text-white-50 small mb-0">Göz kırpma (EAR) ve esneme sıklığı algoritmalarla milisaniyeler içinde işlenir.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 text-center position-relative" style="z-index: 1;">
+                <div class="bg-white p-4 rounded-4 shadow-sm border d-inline-block" style="width: 100%; max-width: 320px;">
+                    <div class="badge bg-success rounded-circle p-3 mb-3 fs-4 shadow-sm" style="width: 60px; height: 60px;">3</div>
+                    <h5 class="fw-bold">Uyarı ve Rapor</h5>
+                    <p class="text-muted small mb-0">Risk tespit edildiğinde sesli alarm çalar ve veriler panele kaydedilir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section py-5 bg-light border-top">
+    <div class="container text-center py-4">
+        <h2 class="fw-bold mb-3 display-6">Güvenliğinizi Riske Atmayın</h2>
+        <p class="text-muted mb-0 fs-5">ODAK sistemini hemen kullanmaya başlayın, yolculuklarınız güvende olsun.</p>
+    </div>
+</section>

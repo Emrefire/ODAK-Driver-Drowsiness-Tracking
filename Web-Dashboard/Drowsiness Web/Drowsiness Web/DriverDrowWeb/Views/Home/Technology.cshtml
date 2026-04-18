@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Teknoloji";
+}
+
+<div class="tech-page-wrapper">
+    <header class="tech-hero text-center">
+        <div class="container">
+            <h1 class="display-4 fw-800 mb-3">Geleceğin Güvenlik Mimarisi</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 750px;">
+                Derin öğrenme algoritmaları ve mikro-servis mimarisini birleştirerek, 
+                sürücü davranışlarını milisaniyeler içinde analiz ediyoruz.
+            </p>
+        </div>
+    </header>
+
+    <section class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-800 mb-5 text-dark">Nasıl Çalışır?</h2>
+                
+                <div class="feature-step">
+                    <div class="step-number">01</div>
+                    <h4 class="fw-800 text-dark">Görüntü İşleme</h4>
+                    <p class="text-muted">Kameradan gelen 60 FPS ham veri, gürültüden arındırılır ve gri ölçeğe dönüştürülerek yapay zeka için optimize edilir.</p>
+                </div>
+
+                <div class="feature-step">
+                    <div class="step-number">02</div>
+                    <h4 class="fw-800 text-dark">Landmark Haritalama</h4>
+                    <p class="text-muted">Yüzdeki 468 nokta milisaniyeler içinde taranarak göz açıklığı, ağız açıklığı ve baş hareketi vektörleri hesaplanır.</p>
+                </div>
+
+                <div class="feature-step">
+                    <div class="step-number">03</div>
+                    <h4 class="fw-800 text-dark">Karar Destek Mekanizması</h4>
+                    <p class="text-muted">Eşik değerleri aşıldığında SignalR üzerinden istemciye anlık uyarı gönderilir.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="code-terminal">
+                    <div class="terminal-header d-flex justify-content-between align-items-center mb-3">
+                        <div class="terminal-dots">
+                            <div class="dot dot-r"></div>
+                            <div class="dot dot-y"></div>
+                            <div class="dot dot-g"></div>
+                        </div>
+                        <div class="small text-muted font-monospace">main.py - Python</div>
+                    </div>
+                    
+                    <div class="code-content font-monospace">
+                        <div class="mb-2"><span class="text-warning">import</span> odak_core <span class="text-warning">as</span> ai</div>
+                        <div class="mb-2 text-secondary"># Derin öğrenme motorunu başlat</div>
+                        <div class="mb-2">engine = ai.<span class="text-info">NeuralEngine</span>(precision=<span class="text-success">"ultra"</span>)</div>
+                        <div class="mb-2"></div>
+                        <div class="mb-2"><span class="text-info">while</span> status.<span class="text-primary">is_active</span>:</div>
+                        <div class="ms-3 mb-2">frame = camera.<span class="text-primary">get_frame</span>()</div>
+                        <div class="ms-3 mb-2">landmarks = engine.<span class="text-primary">extract_mesh</span>(frame)</div>
+                        <div class="ms-3 mb-2"></div>
+                        <div class="ms-3 mb-2 text-secondary"># Yorgunluk analizi</div>
+                        <div class="ms-3 mb-2 text-info">if <span class="text-white">landmarks.EAR < </span> <span class="text-danger">0.25</span>:</div>
+                        <div class="ms-5 mb-2 text-danger">alert.trigger(<span class="text-success">"UYKU_MODU"</span>)</div>
+                        <hr class="opacity-10 my-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+                            <span class="text-success small">System Active (GPU: ON)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light mt-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-800">Kullanılan Teknolojiler</h2>
+                <p class="text-muted">ODAK, en güncel yazılım kütüphaneleri ile güçlendirilmiştir.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-lg-3">
+                    <div class="tech-card bg-white p-4 rounded-4 shadow-sm text-center h-100">
+                        <i class="bi bi-code-square fs-1 text-primary mb-3 d-block"></i>
+                        <h5 class="fw-bold">Python & OpenCV</h5>
+                        <p class="small text-muted mb-0">Görüntü işleme ve yüz tanıma algoritmalarının çekirdek yapısı.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="tech-card bg-white p-4 rounded-4 shadow-sm text-center h-100">
+                        <i class="bi bi-windows fs-1 text-primary mb-3 d-block"></i>
+                        <h5 class="fw-bold">ASP.NET Core</h5>
+                        <p class="small text-muted mb-0">Güçlü backend mimarisi ve API yönetimi.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="tech-card bg-white p-4 rounded-4 shadow-sm text-center h-100">
+                        <i class="bi bi-broadcast fs-1 text-danger mb-3 d-block"></i>
+                        <h5 class="fw-bold">SignalR</h5>
+                        <p class="small text-muted mb-0">Sunucu ile istemci arasında gecikmesiz, gerçek zamanlı veri akışı.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="tech-card bg-white p-4 rounded-4 shadow-sm text-center h-100">
+                        <i class="bi bi-bootstrap fs-1 text-primary mb-3 d-block"></i>
+                        <h5 class="fw-bold">Bootstrap 5</h5>
+                        <p class="small text-muted mb-0">Modern, duyarlı ve şık kullanıcı arayüzü.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

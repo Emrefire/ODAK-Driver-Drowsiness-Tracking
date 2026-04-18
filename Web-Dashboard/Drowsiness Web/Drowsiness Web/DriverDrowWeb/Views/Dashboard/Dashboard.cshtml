@@ -1,0 +1,440 @@
+@model List<DriverDrowWeb.Models.DrivingSession>
+
+@{
+    ViewData["Title"] = "Veri Analiz Paneli";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<div class="container py-5 dashboard-body">
+    <div class="d-flex flex-column flex-xl-row justify-content-between align-items-start align-items-xl-center mb-5 gap-3">
+        <div>
+            <h1 class="fw-bold m-0 text-dark">Güvenlik <span class="text-primary">Değerleri</span></h1>
+            <p class="text-muted mt-2 mb-0">Hoş geldin, sürüş verilerin anlık olarak işleniyor.</p>
+        </div>
+        
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+            <button onclick="finishDrive()" class="btn btn-danger rounded-pill px-4 fw-bold shadow-sm hover-scale">
+                <i class="bi bi-stop-circle me-2"></i>Sürüşü Bitir & Kaydet
+            </button>
+            
+            <div class="status-indicator d-flex align-items-center gap-2 bg-white px-3 py-2 rounded-pill shadow-sm">
+                <span class="pulse-green" style="width: 10px; height: 10px; background-color: #198754; border-radius: 50%; display: inline-block;"></span>
+                <span id="safety-status" class="fw-bold text-success small">Veri Akışı Aktif</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-4 big-stat-card">
+                <div class="text-center">
+                    <span class="fs-1">🛡️</span>
+                    <p class="text-muted fw-bold small text-uppercase mt-2">GÜVENLİK SKORU</p>
+                    <div class="display-4 fw-bold my-2 text-dark" id="safety-score-text">100</div>
+                    <div id="status-badge" class="badge bg-success rounded-pill px-3 py-2 transition-badge">MÜKEMMEL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-4 big-stat-card">
+                <div class="text-center">
+                    <span class="fs-1">😴</span>
+                    <p class="text-muted fw-bold small text-uppercase mt-2">TOPLAM UYKU SÜRESİ</p>
+                    <div class="display-4 fw-bold my-2 text-danger" id="total-sleep-time">0<small class="fs-4">sn</small></div>
+                    <p class="text-muted small mb-0">Kritik yorgunluk belirtisi tespisi</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 p-4 big-stat-card">
+                <div class="text-center">
+                    <span class="fs-1">🥱</span>
+                    <p class="text-muted fw-bold small text-uppercase mt-2">ESNEME ADEDİ</p>
+                    <div class="display-4 fw-bold my-2 text-warning" id="total-yawn-count">0</div>
+                    <p class="text-muted small mb-0">Yorgunluk belirtisi tespiti</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold m-0"><i class="bi bi-activity me-2 text-primary"></i>Anlık Yorgunluk Seviyesi</h6>
+            <span id="fatigue-percent-text" class="fw-bold text-primary">%0</span>
+        </div>
+        <div class="progress" style="height: 10px; border-radius: 10px;">
+            <div id="fatigue-progress" class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 mb-4">
+        <h5 class="fw-bold mb-4"><i class="bi bi-graph-up me-2 text-primary"></i>Detaylı Yorgunluk Analizi (Trend)</h5>
+        <div style="height: 300px;">
+            <canvas id="fatigueTrendChart"></canvas>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0"><i class="bi bi-clock-history me-2 text-primary"></i>Geçmiş Sürüş Kayıtları</h4>
+        </div>
+        
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="table-responsive card border-0 shadow-sm p-3 d-none d-md-block">
+                <table class="table align-middle custom-table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-3">Tarih / Saat</th>
+                            <th class="text-center">Süre</th>
+                            <th class="text-center">Ort. Yorgunluk</th>
+                            <th class="text-center">Top. Uyku</th>
+                            <th class="text-center">Esneme</th>
+                            <th class="text-center">Sürüş Skoru</th>
+                            <th class="text-end pe-3">İşlemler</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        @foreach (var item in Model)
+                        {
+                            var duration = (item.EndTime - item.StartTime).TotalMinutes.ToString("0");
+                            <tr>
+                                <td class="ps-3">
+                                    <div class="fw-bold text-dark">@item.StartTime.ToString("dd MMMM yyyy")</div>
+                                    <div class="small text-muted">@item.StartTime.ToString("HH:mm") - @item.EndTime.ToString("HH:mm")</div>
+                                </td>
+                                <td class="text-center">@duration dk</td>
+                                <td class="text-center"><span class="badge bg-light text-primary rounded-pill fw-bold px-3 py-2">%@item.AverageFatigue</span></td>
+                                <td class="text-center"><span class="text-danger fw-bold">@item.SleepDuration sn</span></td>
+                                <td class="text-center"><span class="fw-bold">@item.YawnCount</span></td>
+                                <td class="text-center">
+                                    @if(item.Score >= 80) { <div class="text-success fw-800">@item.Score / 100</div> }
+                                    else if(item.Score >= 50) { <div class="text-warning fw-800">@item.Score / 100</div> }
+                                    else { <div class="text-danger fw-800">@item.Score / 100</div> }
+                                </td>
+                                <td class="text-end pe-3">
+                                    <button class="btn btn-sm btn-outline-primary rounded-circle me-1" 
+                                            title="Raporu İncele"
+                                            onclick="showReport('@item.StartTime.ToString("dd MMMM yyyy")', '@item.AverageFatigue', '@item.SleepDuration', '@item.YawnCount')">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger rounded-circle" 
+                                            title="Kaydı Sil"
+                                            onclick="deleteDrive(@item.Id)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-md-none">
+                @foreach (var item in Model)
+                {
+                    var duration = (item.EndTime - item.StartTime).TotalMinutes.ToString("0");
+                    <div class="card border-0 shadow-sm mb-3 rounded-4 overflow-hidden">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-0">@item.StartTime.ToString("dd MMMM yyyy")</h6>
+                                    <span class="text-muted small"><i class="bi bi-clock me-1"></i>@item.StartTime.ToString("HH:mm") (@duration dk)</span>
+                                </div>
+                                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fw-bold">%@item.AverageFatigue Yorgunluk</span>
+                            </div>
+
+                            <div class="row g-2 text-center mb-3">
+                                <div class="col-4">
+                                    <div class="p-2 bg-light rounded-3">
+                                        <div class="text-danger fw-800 fs-5">@item.SleepDuration sn</div>
+                                        <div class="small text-muted" style="font-size: 0.7rem;">UYKU</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-2 bg-light rounded-3">
+                                        <div class="text-dark fw-800 fs-5">@item.YawnCount</div>
+                                        <div class="small text-muted" style="font-size: 0.7rem;">ESNEME</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="p-2 bg-light rounded-3">
+                                        @if(item.Score >= 80) { <div class="text-success fw-800 fs-5">@item.Score</div> }
+                                        else if(item.Score >= 50) { <div class="text-warning fw-800 fs-5">@item.Score</div> }
+                                        else { <div class="text-danger fw-800 fs-5">@item.Score</div> }
+                                        <div class="small text-muted" style="font-size: 0.7rem;">SKOR</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary flex-grow-1 rounded-3 fw-bold py-2" 
+                                        onclick="showReport('@item.StartTime.ToString("dd MMMM yyyy")', '@item.AverageFatigue', '@item.SleepDuration', '@item.YawnCount')">
+                                    <i class="bi bi-file-earmark-text me-2"></i>İncele
+                                </button>
+                                
+                                <button class="btn btn-outline-danger rounded-3 fw-bold py-2 px-3" 
+                                        onclick="deleteDrive(@item.Id)">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-light text-center border-0 shadow-sm py-4">
+                <i class="bi bi-info-circle fs-4 text-muted mb-2 d-block"></i>
+                <span class="text-muted">Henüz kaydedilmiş bir sürüş verisi bulunmuyor.</span>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="modalTitle">Sürüş Analiz Raporu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-3">
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-3 text-center">
+                            <small class="text-muted d-block mb-1 text-uppercase fw-bold">Ort. Yorgunluk</small>
+                            <h3 class="fw-bold text-primary mb-0" id="modalFatigue">%0</h3>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-3 text-center">
+                            <small class="text-muted d-block mb-1 text-uppercase fw-bold">Uyku İhlali</small>
+                            <h3 class="fw-bold text-danger mb-0" id="modalSleep">0sn</h3>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="p-3 bg-light rounded-3 text-center">
+                            <small class="text-muted d-block mb-1 text-uppercase fw-bold">Esneme</small>
+                            <h3 class="fw-bold text-warning mb-0" id="modalYawn">0</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 p-4 rounded-4 bg-light border-start border-primary border-4">
+                    <h6 class="fw-bold mb-2">Yapay Zeka Analiz Notu</h6>
+                    <p class="text-muted small mb-0">
+                        Bu sürüş oturumu başarıyla kaydedilmiştir. Yukarıdaki veriler sistem tarafından sensörler aracılığıyla toplanmış ve veritabanına işlenmiştir. Sürüş güvenliği analizi tamamlanmıştır.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-4">
+                <button type="button" class="btn btn-secondary rounded-3 fw-bold px-4" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="finishConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <div class="bg-danger bg-opacity-10 text-danger rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="bi bi-stop-circle-fill fs-1"></i>
+                    </div>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Sürüşü Bitirmek Üzeresin</h4>
+                <p class="text-muted mb-4">
+                    Sürüş kaydı sonlandırılacak ve mevcut veriler veritabanına kaydedilecektir. Onaylıyor musun?
+                </p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <button type="button" class="btn btn-light rounded-pill px-4 fw-bold text-muted" data-bs-dismiss="modal">
+                        Vazgeç
+                    </button>
+                    <button type="button" onclick="executeSaveDrive()" class="btn btn-danger rounded-pill px-4 fw-bold shadow-sm">
+                        Evet, Bitir ve Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let startTime = new Date(); 
+    let totalFatigueSum = 0;
+    let dataCount = 0;
+    let currentStats = { sleepTime: 0, yawnCount: 0, score: 100 };
+
+    // CHART JS AYARLARI
+    const ctx = document.getElementById('fatigueTrendChart').getContext('2d');
+    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(37, 99, 235, 0.5)');
+    gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)'); 
+    
+    let fatigueData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    
+    const trendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['', '', '', '', '', '', '', '', '', ''],
+            datasets: [{
+                label: 'Yorgunluk %',
+                data: fatigueData,
+                borderColor: '#0d6efd',
+                backgroundColor: gradient,
+                borderWidth: 2,
+                fill: true, 
+                tension: 0.4,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: { y: { min: 0, max: 100, grid: { color: '#f0f0f0' } }, x: { display: false } },
+            plugins: { legend: { display: false } },
+            animation: { duration: 500 }
+        }
+    });
+
+    // SIGNALR BAĞLANTISI
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/driverHub")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.on("ReceiveMetrics", function (m) {
+        document.getElementById("total-sleep-time").innerHTML = m.sleepTime + '<small class="fs-4">sn</small>';
+        document.getElementById("total-yawn-count").innerText = m.yawnCount;
+        document.getElementById("safety-score-text").innerText = m.score;
+
+        currentStats.sleepTime = m.sleepTime;
+        currentStats.yawnCount = m.yawnCount;
+        currentStats.score = m.score;
+
+        totalFatigueSum += m.currentFatigue;
+        dataCount++;
+
+        const percentText = document.getElementById("fatigue-percent-text");
+        const progressEl = document.getElementById("fatigue-progress");
+        
+        if(percentText && progressEl) {
+            percentText.innerText = "%" + m.currentFatigue;
+            progressEl.style.width = m.currentFatigue + "%";
+            
+            if(m.currentFatigue > 70) {
+                progressEl.className = "progress-bar bg-danger progress-bar-striped progress-bar-animated";
+                percentText.className = "fw-bold text-danger";
+            } else {
+                progressEl.className = "progress-bar bg-primary progress-bar-striped progress-bar-animated";
+                percentText.className = "fw-bold text-primary";
+            }
+        }
+
+        const badge = document.getElementById("status-badge");
+        if(badge) {
+            badge.className = "badge rounded-pill px-3 py-2 transition-badge"; 
+            if (m.score >= 80) {
+                badge.innerText = "MÜKEMMEL";
+                badge.classList.add("bg-success");
+            } else if (m.score >= 50) {
+                badge.innerText = "DİKKAT";
+                badge.classList.add("bg-warning", "text-dark");
+            } else {
+                badge.innerText = "TEHLİKELİ";
+                badge.classList.add("bg-danger");
+            }
+        }
+        
+        fatigueData.push(m.currentFatigue);
+        fatigueData.shift();
+        trendChart.update('none'); 
+    });
+
+    connection.start().then(() => {
+        console.log("SignalR Bağlandı.");
+    }).catch(err => console.error(err));
+
+    function showReport(dateText, fatigue, sleep, yawn) {
+        document.getElementById('modalTitle').innerText = dateText + " Sürüş Detayları";
+        document.getElementById('modalFatigue').innerText = "%" + fatigue;
+        document.getElementById('modalSleep').innerText = sleep + "sn";
+        document.getElementById('modalYawn').innerText = yawn;
+        new bootstrap.Modal(document.getElementById('reportModal')).show();
+    }
+
+    function deleteDrive(id) {
+        if (!confirm("Bu sürüş kaydını kalıcı olarak silmek istediğinize emin misiniz?")) return;
+
+        const formData = new FormData();
+        formData.append("id", id);
+
+        fetch('/Dashboard/DeleteDrive', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert("Hata: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Bağlantı hatası oluştu.");
+        });
+    }
+
+    function finishDrive() {
+        var myModal = new bootstrap.Modal(document.getElementById('finishConfirmModal'));
+        myModal.show();
+    }
+
+    function executeSaveDrive() {
+        const modalEl = document.getElementById('finishConfirmModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if(modalInstance) modalInstance.hide();
+
+        let avgFatigue = dataCount > 0 ? Math.round(totalFatigueSum / dataCount) : 0;
+        let roundedSleep = Math.round(currentStats.sleepTime);
+
+        let sessionData = {
+            StartTime: startTime.toISOString(),
+            AverageFatigue: avgFatigue,
+            SleepDuration: roundedSleep,
+            YawnCount: currentStats.yawnCount,
+            Score: currentStats.score
+        };
+
+        fetch('/Dashboard/SaveDrive', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sessionData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); 
+            } else {
+                alert("Hata oluştu: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Bağlantı hatası!");
+        });
+    }
+</script>

@@ -1,0 +1,4 @@
+closed_mouth
+open_mouth
+open_eyes
+closed_eyes

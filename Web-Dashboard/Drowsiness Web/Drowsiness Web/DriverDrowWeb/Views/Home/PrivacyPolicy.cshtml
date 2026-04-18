@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Gizlilik Politikası";
+}
+
+<section class="privacy-header py-5 bg-light border-bottom">
+    <div class="container text-center">
+        <i class="bi bi-shield-lock-fill display-3 text-primary mb-3"></i>
+        <h1 class="fw-800 display-5 text-dark">Gizlilik ve <span class="text-primary">Güvenlik</span></h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            ODAK (Dijital Nöbetçi) olarak verilerinizin gizliliğine saygı duyuyoruz. 
+            Kamera erişimi ve veri işleme süreçlerimiz hakkında şeffaf bilgilendirme.
+        </p>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-4 justify-content-center">
+        <div class="col-lg-10">
+            
+            <div class="card border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
+                            <i class="bi bi-camera-video-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-800 mb-3">1. Kamera ve Görüntü İşleme</h4>
+                            <p class="text-muted mb-0">
+                                ODAK sistemi, sürücü yorgunluğunu tespit etmek amacıyla cihazınızın kamerasına erişim sağlar. 
+                                <strong class="text-dark">Önemli:</strong> Kamera görüntüleri <u>sunucularımıza kaydedilmez</u> veya üçüncü taraflarla paylaşılmaz. 
+                                Görüntüler, anlık olarak tarayıcınızda veya yerel ağınızda işlenir, sadece sayısal analiz verileri (yorgunluk skoru, esneme sayısı vb.) veritabanına işlenir.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
+                            <i class="bi bi-database-check fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-800 mb-3">2. Toplanan Veriler</h4>
+                            <p class="text-muted mb-2">Hizmetimizi sunabilmek için aşağıdaki verileri işliyoruz:</p>
+                            <ul class="text-muted mb-0">
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2 small"></i><strong>Kimlik Bilgileri:</strong> Ad, soyad ve e-posta adresi (Kayıt işlemi için).</li>
+                                <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2 small"></i><strong>Sürüş Değerleri:</strong> Sürüş süresi, ortalama yorgunluk yüzdesi ve tespit edilen uyku ihlali sayısı.</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2 small"></i><strong>Teknik Veriler:</strong> Giriş yapılan cihaz türü ve tarayıcı bilgileri.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4 rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="bg-warning bg-opacity-10 text-warning rounded-circle p-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 60px; height: 60px;">
+                            <i class="bi bi-lock-fill fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-800 mb-3">3. Veri Güvenliği</h4>
+                            <p class="text-muted mb-0">
+                                Şifreleriniz veritabanımızda <strong>SHA-256</strong> şifreleme algoritması ile saklanmaktadır. 
+                                Yönetici ekibimiz dahil kimse şifrenizi göremez. Verileriniz, güncel güvenlik duvarları ve SSL sertifikaları ile korunan sunucularda barındırılır.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-light border text-center p-4 rounded-4">
+                <p class="mb-0 text-muted small">
+                    Bu politika en son <strong>23 Aralık 2025</strong> tarihinde güncellenmiştir. Sorularınız için 
+                    <a href="mailto:destek@odakprojesi.com" class="fw-bold text-decoration-none">destek@odakcore.com</a> adresinden bize ulaşabilirsiniz.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>

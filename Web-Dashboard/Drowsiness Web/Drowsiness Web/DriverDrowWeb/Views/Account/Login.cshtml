@@ -1,0 +1,85 @@
+@model DriverDrowWeb.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<section class="login-section d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="card border-0 shadow-lg p-4 login-card">
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="bi bi-shield-check fs-3"></i>
+                            </div>
+                            <h2 class="fw-800 text-dark mb-1">Hoş Geldiniz</h2>
+                            <p class="text-muted small">ODAK paneline erişim sağlayın.</p>
+                        </div>
+                        
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger small p-2 text-center border-0 bg-danger bg-opacity-10 text-danger fw-bold rounded-3">
+                                <i class="bi bi-exclamation-circle me-1"></i> @ViewBag.Error
+                            </div>
+                        }
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">E-POSTA</label>
+                                <div class="input-group input-group-lg border rounded-3 overflow-hidden">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-envelope text-secondary"></i></span>
+                                    <input asp-for="Email" class="form-control border-0 bg-light fs-6" placeholder="ornek@email.com" required>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label class="form-label fw-bold small text-muted">ŞİFRE</label>
+                                </div>
+                                <div class="input-group input-group-lg border rounded-3 overflow-hidden">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-key text-secondary"></i></span>
+                                    <input asp-for="Password" type="password" id="password" class="form-control border-0 bg-light fs-6" placeholder="••••••••" required>
+                                    <button type="button" class="btn btn-light border-0 text-muted" onclick="togglePassword()"><i class="bi bi-eye"></i></button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm hover-scale rounded-3 mb-3">
+                                Güvenli Giriş Yap
+                            </button>
+                        </form>
+
+                        <div class="text-center">
+                            <p class="small text-muted mb-2">Hesabınız yok mu?</p>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary w-100 py-2 fw-bold rounded-3">
+                                <i class="bi bi-person-plus me-2"></i>Yeni Hesap Oluştur
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pt-3 pb-0">
+                        <p class="small text-muted mb-0">&copy; 2025 ODAK Sürücü Güvenliği</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePassword() {
+        const passInput = document.getElementById("password");
+        const icon = event.currentTarget.querySelector("i");
+        if (passInput.type === "password") {
+            passInput.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            passInput.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
+</script>

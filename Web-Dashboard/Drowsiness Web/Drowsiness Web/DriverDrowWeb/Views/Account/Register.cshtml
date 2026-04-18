@@ -1,0 +1,101 @@
+@model DriverDrowWeb.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<section class="register-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                
+                <div class="card p-4 register-card">
+                    <div class="card-body p-0">
+                        
+                        <div class="text-center mb-4 register-header">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-sm" style="width: 55px; height: 55px;">
+                                <i class="bi bi-person-plus-fill fs-4"></i>
+                            </div>
+                            <h2 class="mb-1">Hesap Oluştur</h2>
+                            <p class="text-muted small">Sürücü güvenliği için aramıza katılın.</p>
+                        </div>
+
+                        <form asp-controller="Account" asp-action="Register" method="post">
+                            
+                            <div class="mb-3">
+                                <label class="fw-bold text-primary small mb-1 ms-1">AD SOYAD</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input asp-for="FullName" class="form-control ps-2 border-start-0" placeholder="Adınız Soyadınız" required>
+                                </div>
+                                <span asp-validation-for="FullName" class="text-danger small ms-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-primary small mb-1 ms-1">E-POSTA</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input asp-for="Email" class="form-control ps-2 border-start-0" placeholder="ornek@email.com" required>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger small ms-1"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-primary small mb-1 ms-1">ŞİFRE</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input asp-for="Password" type="password" id="password" class="form-control ps-2 border-start-0 border-end-0" placeholder="••••••••" required>
+                                    <button type="button" class="input-group-text bg-white border-start-0 text-muted" onclick="togglePassword('password', this)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small ms-1"></span>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="fw-bold text-primary small mb-1 ms-1">ŞİFRE ONAY</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-check-circle"></i></span>
+                                    <input asp-for="ConfirmPassword" type="password" id="confirmPassword" class="form-control ps-2 border-start-0 border-end-0" placeholder="••••••••" required>
+                                    <button type="button" class="input-group-text bg-white border-start-0 text-muted" onclick="togglePassword('confirmPassword', this)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small ms-1"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 fw-bold text-white shadow-sm btn-register mb-3">
+                                Kaydı Tamamla
+                            </button>
+                        </form>
+
+                        <div class="text-center">
+                            <span class="text-muted small">Zaten hesabınız var mı?</span>
+                            <a asp-controller="Account" asp-action="Login" class="text-primary fw-bold text-decoration-none ms-1 hover-scale d-inline-block small">
+                                Giriş Yap
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePassword(inputId, btn) {
+        const passInput = document.getElementById(inputId);
+        const icon = btn.querySelector("i");
+        
+        if (passInput.type === "password") {
+            passInput.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            passInput.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
+</script>

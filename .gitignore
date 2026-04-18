@@ -1,0 +1,28 @@
+# --- Android / Kotlin Specific ---
+**/build/
+**/.gradle/
+**/local.properties
+**/.navigation/
+**/*.keystore
+**/*.jks
+**/.idea/
+*.iml
+
+# --- Web / .NET (Dashboard) ---
+[Bb]in/
+[Oo]bj/
+.vs/
+**/node_modules/
+appsettings.Development.json
+
+# --- Python & AI ---
+**/venv/
+**/__pycache__/
+**/*.h5
+**/*.pt
+**/*.pkl
+
+# --- OS & IDE ---
+.vscode/
+.DS_Store
+Thumbs.db
