@@ -17,7 +17,7 @@ The project is built on a tripartite architecture, ensuring seamless communicati
 
 ## 🚀 Key Features
 
-- **Real-Time Detection:** Instant drowsiness and fatigue analysis.
+- **Real-Time Detection:** Instant drowsiness and fatigue analysis using MediaPipe and custom AI models.
 - **SignalR Integration:** Zero-latency data synchronization between the driver and the control center.
 - **Comprehensive Logging:** Every fatigue event is logged into a SQL Server database for historical analysis.
 - **Local AI Processing:** Optimized mobile performance with TFLite integration.
@@ -27,7 +27,7 @@ The project is built on a tripartite architecture, ensuring seamless communicati
 This project was developed by a dedicated team of engineers:
 
 - **Emre Dönmez** - [GitHub](https://github.com/Emrefire) | [LinkedIn](https://linkedin.com/in/emredönmez41)
-- **Mustafa Aslan** - [LinkedIn](https://www.linkedin.com/in/aslanmustafa33/)
+- **Mustafa Aslan** - [GitHub](https://github.com/mustafaaslan1) | [LinkedIn](https://www.linkedin.com/in/aslanmustafa33/)
 
 ## 🏗️ Folder Structure
 
