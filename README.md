@@ -44,4 +44,4 @@ This project was developed by a dedicated team of engineers:
 - **Database:** MSSQL Server.
 
 ---
-*Supported by TÜBİTAK 2209-B Program.*
+*Supported by TÜBİTAK 2209-A Program.*
